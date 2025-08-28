@@ -1,0 +1,85 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Eval Text",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "llava.eval.eval_text",
+            "args": [
+                "--text_data_path=/data/wangjl/DATASET/bench2drive/b2d_base_gpt_4o_QAs/val",
+                "--checkpoint_path=${workspaceFolder}/checkpoints/7B_gpt4o-text/checkpoint-74640",
+                "--output_dir=${workspaceFolder}/checkpoints/7B_gpt4o-text/output/checkpoint-74640"
+            ],
+            "console": "integratedTerminal",
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "0"
+            },
+            "justMyCode": true
+        },
+        {
+            "name": "Train Model with DeepSpeed",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/data/liuxy/mamba/envs/textDrive/bin/deepspeed",            
+            "console": "integratedTerminal",
+            "args": [
+                "--master_port", "21240",
+                "--include", "localhost:3",
+                "llava/train/train_mem.py",
+                "--deepspeed", "./scripts/zero3.json",
+                "--version", "qwen_1_5-0.5B",
+                "--model_name_or_path", "llava-next-interleave-qwen-0.5b",
+                "--model_max_length", "32768",
+                "--vision_tower", "google/siglip-so400m-patch14-384",
+                "--num_train_epochs", "1",
+                "--mm_patch_merge_type", "flat",
+                "--per_device_train_batch_size", "1",
+                "--dataloader_num_workers", "2",
+                "--history_frames", "4",
+                "--future_frames", "6",
+                "--learning_rate", "5e-5",
+                "--evaluation_strategy", "no",
+                "--save_strategy", "epoch",
+                "--save_steps", "1",
+                "--save_total_limit", "30",
+                "--warmup_ratio", "0.03",
+                "--freeze_vision_tower", "False",
+                "--freeze_perception_encoder", "True",
+                "--use_map_encoder", "False",
+                "--use_perception_encoder", "False",
+                "--use_navi_encoder", "False",
+                "--use_command_encoder", "False",
+                "--run_name", "7B_gpt4o-text_debug",
+                "--output_dir", "checkpoints/7B_gpt4o-text_debug",
+                "--dataloader_drop_last", "False",
+                "--dataloader_persistent_workers", "True",
+                "--perception_config_path", "Bench2DriveZoo/adzoo/apollofm_perception/configs/textDrive/base_e2e_b2d.py",
+                "--text_data_path", "Bench2DriveZoo/data/QA_data/train_occ.pkl"
+            ],
+            "justMyCode": false
+        },
+        {
+            "name": "eval open loop",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/home/liuxy/b2d/llava_carla/llava/eval/eval_text.py",
+            "console": "integratedTerminal",
+            // "cwd": "Bench2DriveZoo/mmcv/datasets",
+            "args": [
+                "--text_data_path=/home/liuxy/b2d/llava_carla/Bench2DriveZoo/data/changelane_road_QA_eval",
+                "--checkpoint_path=/data/liuxy/b2d/llava_carla/checkpoints/0.5B_CoT_changelane_road/checkpoint-5046",
+                "--output_dir=eval_open_debug"
+            ]
+        },
+        {
+            "name": "Python 调试程序: 当前文件",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            // "cwd": "Bench2DriveZoo/mmcv/datasets",
+            "justMyCode": false
+        }
+    ]
+}
