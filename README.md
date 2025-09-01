@@ -4,7 +4,7 @@ Reasoning for Closed-loop Autonomous Driving -->
 <div align="center">
 <h3>[🎉CoRL 2025] ReasonPlan: Unified Scene Prediction and Decision Reasoning <br>for Closed-loop Autonomous Driving</h3>
 
-Xueyi Liu<sup>1,2,3</sup>, Zuodong Zhong<sup>4</sup>, Yuxin Guo<sup>1,2</sup>, Yun-Fu Liu<sup>3</sup>, Zhiguo Su<sup>3</sup>, Qichao Zhang<sup>1,2\*</sup>, <br> Junli Wang<sup>1,2</sup>, Yinfeng Gao<sup>4</sup>, Yupeng Zheng<sup>1,2</sup>,  Qiao Lin<sup>3</sup>, Huiyong Chen<sup>3</sup>, Dongbin Zhao<sup>1,2\*</sup>
+Xueyi Liu<sup>1,2,3</sup>, Zuodong Zhong<sup>4</sup>, Junli Wang<sup>1,2</sup>, Yuxin Guo<sup>1,2</sup>, Zhiguo Su<sup>3</sup>, Qichao Zhang<sup>1,2\*</sup>, <br> Yun-Fu Liu<sup>3</sup>, Yinfeng Gao<sup>4</sup>, Yupeng Zheng<sup>1,2</sup>,  Qiao Lin<sup>3</sup>, Huiyong Chen<sup>3</sup>, Dongbin Zhao<sup>1,2\*</sup>
 
 <sup>1</sup>  SKL-MAIS, Institute of Automation, Chinese Academy of Sciences, <br><sup>2</sup>  School of Artificial Intelligence, University of Chinese Academy of Sciences, <br><sup>3</sup>  EACON, <br><sup>4</sup>  School of Automation and Electrical Engineering, University of Science and Technology Beijing
 
@@ -72,22 +72,6 @@ ln -s /path/to/bench2drive ./data
 ln -s /path/to/siglip ./google
 ln -s /path/to/qwen ./llava-next-interleave-qwen-0.5b
 ```
-
-### Dataset generate
-Classify scenarios based on whether the map contains an intersection
-```bash
-python qa_generate/category.py
-```
-Generate QA data for each scenario
-```bash
-python qa_generate/generate_QA_lane.py
-python qa_generate/generate_QA_junction.py
-```
-Store all QA data in a .pkl file
-```bash 
-python qa_generate/json2pkl.py
-```
-
 
 ## Training
 Please modify the corresponding parameters or configuration.
